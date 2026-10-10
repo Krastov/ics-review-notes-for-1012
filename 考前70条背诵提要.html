@@ -1,0 +1,103 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>考前70条背诵提要</title><style>
+:root{color-scheme:light;--ink:#243246;--muted:#617188;--line:#dce3eb;--accent:#225e91;--paper:#fff;--bg:#f4f6f9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.95;font-size:17px}
+.shell{max-width:1420px;margin:auto;display:grid;grid-template-columns:292px minmax(0,1fr);gap:32px;padding:32px 28px}aside{position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;background:white;border:1px solid var(--line);border-radius:12px;padding:20px 16px;font-size:13px;line-height:1.65}
+aside strong{display:block;font-size:17px;margin-bottom:12px}aside ul{list-style:none;padding-left:12px;margin:6px 0}aside>ul{padding-left:0}aside li{margin:7px 0}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}main{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:42px 48px}h1,h2,h3{line-height:1.55;scroll-margin-top:24px}h1{font-size:28px;border-bottom:2px solid var(--line);padding-bottom:12px;margin:44px 0 20px}h1:first-child{margin-top:0}h2{font-size:22px;color:#194f78;margin:40px 0 14px}h3{font-size:18px;margin:28px 0 12px}p{margin:14px 0}li{margin:7px 0}table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.75;margin:20px 0;display:table}th,td{border:1px solid var(--line);text-align:left;padding:9px 12px;overflow-wrap:anywhere}th{background:#edf3f8;color:#244767}tr:nth-child(even){background:#f8fafc}pre{overflow:auto;background:#f3f5f8;border:1px solid var(--line);border-radius:6px;padding:15px;font-size:15px;line-height:1.7}code{font-family:Consolas,"Cascadia Mono",monospace}blockquote{border-left:4px solid #6098c6;padding:6px 18px;margin:18px 0;background:#f2f7fb}.memory{border-left:4px solid #83a4c1;background:#f3f7fb;padding:12px 16px;border-radius:0 6px 6px 0}.actions{display:flex;gap:14px;align-items:center;margin:0 0 25px;font-size:14px;color:var(--muted);flex-wrap:wrap}.actions button{border:1px solid var(--line);background:white;color:var(--accent);border-radius:6px;padding:8px 13px;font:inherit;cursor:pointer} .table-wrap{overflow-x:auto}
+@media(max-width:1050px){.shell{display:block;padding:18px}aside{position:static;height:auto;max-height:320px;margin-bottom:18px}main{padding:28px}}
+@media(max-width:600px){body{font-size:16px}.shell{padding:10px}main{padding:22px 18px}h1{font-size:24px}h2{font-size:20px}th,td{padding:7px 8px;min-width:75px}table{font-size:14px}}
+@media print{body{background:white;font-size:11pt;line-height:1.6}.shell{display:block;padding:0}aside,.actions{display:none}main{border:0;padding:0}h1{font-size:19pt;break-before:page}h1:first-child{break-before:auto}h2{font-size:14pt}h3{font-size:12pt}h1,h2,h3{break-after:avoid}table,pre,.memory{break-inside:avoid}table{font-size:9pt}a{color:inherit;text-decoration:none}@page{size:A4;margin:18mm 17mm}}
+</style></head><body><div class="shell"><aside><strong>目录</strong><div class="toc">
+<ul>
+<li><a href="#s-cee6d5e54e4d">考前 70 条背诵提要</a><ul>
+<li><a href="#s-631f2f3b865f">A. 数据表示与整数</a></li>
+<li><a href="#s-06d7326e9626">B. 浮点数</a></li>
+<li><a href="#s-0dee023329db">C. 汇编与控制流</a></li>
+<li><a href="#s-e212c32655a9">D. 过程调用与内存布局</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside><main><div class="actions"><button type="button" onclick="window.print()">打印 / 保存为 PDF</button><a href="数据表示与程序的机器级表示_离线阅读.html">返回完整讲义</a><span>离线阅读 · 无需安装</span></div><h1 id="s-cee6d5e54e4d">考前 70 条背诵提要</h1>
+<p>使用 CS:APP 常见 Linux x86-64 / AT&amp;T / System V 约定。规则的条件和详细解释请查看完整讲义。</p>
+<h2 id="s-631f2f3b865f">A. 数据表示与整数</h2>
+<ol>
+<li>数据由位模式保存，由类型解释；地址说明位置，内存内容说明值。</li>
+<li>一个十六进制位对应四个二进制位，一个字节通常是八位。</li>
+<li>小端低有效字节在低地址；x86-64 是小端。</li>
+<li>Linux x86-64 常用 int 4 字节、long 8 字节、指针 8 字节。</li>
+<li>w 位无符号范围 0…2^w−1；w 位补码范围 −2^(w−1)…2^(w−1)−1。</li>
+<li>补码最高位权重 −2^(w−1)；同位模式最高位为 1 时，补码值等于无符号值减 2^w。</li>
+<li>补码负数取反加一；全一是 −1；TMin 的同宽正相反数无法表示。</li>
+<li>逻辑运算看零与非零，结果 0/1；按位运算逐位处理；&amp;&amp;、|| 短路。</li>
+<li>左移低位补零；逻辑右移高位补零；算术右移高位补符号位。</li>
+<li>零扩展保无符号值，符号扩展保补码值；截断只保留低位。</li>
+<li>先提升，再确定共同类型，再运算，再转换到赋值目标。</li>
+<li>int 与同等级 unsigned int 混合，int 转 unsigned int；更宽有符号类型可能容纳较窄无符号类型。</li>
+<li>无符号算术按模回绕；C 有符号溢出未定义。</li>
+<li>补码加法同号结果反号才溢出；一正一负加法不溢出。</li>
+<li>有符号减法在操作数异号、结果与被减数反号时溢出。</li>
+<li>完整乘积最多 2w 位；同位模式有符号和无符号乘积的低 w 位相同。</li>
+<li>C 整数除法向零截断，余数与被除数同号或为零。</li>
+<li>无符号除以 2^k 用逻辑右移；负数向零截断可先加 2^k−1，再算术右移。</li>
+<li>移位数要在提升后的位宽内；机器计数屏蔽不能替 C 非法移位辩护。</li>
+<li>x&amp;(x−1) 清最低一；x&amp;(~x+1) 留最低一，注意实际运算类型。</li>
+</ol>
+<h2 id="s-06d7326e9626">B. 浮点数</h2>
+<ol start="21">
+<li>V=(−1)^s×M×2^E；存储字段是 s、e、f，e 不等于 E，f 不等于 M。</li>
+<li>bias=2^(k−1)−1。</li>
+<li>单精度：1/8/23，bias=127，规格化精度 24 位；双精度：1/11/52，bias=1023，精度 53 位。</li>
+<li>规格化：e 既非全零也非全一，M=1+frac，E=e−bias。</li>
+<li>非规格化：e 全零，M=frac，E=1−bias；f 全零就是带符号零。</li>
+<li>e 全一、f 全零是无穷；e 全一、f 非全零是 NaN。</li>
+<li>最小正非规格化数 2^(1−bias−n)；最小正规格化数 2^(1−bias)。</li>
+<li>最大有限数 (2−2^(−n))×2^Emax；同指数区间间距 2^(E−n)。</li>
+<li>float 最小正非规格化 2^−149，最小正规格化 2^−126；double 对应 2^−1074、2^−1022。</li>
+<li>范围看指数，精度看有效位数；所有绝对值不超过 2^p 的整数可精确表示。</li>
+<li>默认最近偶数，恰好半数时选最低保留位为零；舍入可能再产生进位。</li>
+<li>浮点加法对阶、加减、规格化、舍入；乘法符号异或、有效数相乘、实际指数相加，再规格化舍入。</li>
+<li>浮点加法和乘法不普遍满足结合律，分配律也不普遍成立。</li>
+<li>NaN 不等于自身，有序比较为假；+0 和 −0 数值比较相等。</li>
+<li>32 位 int 转 double 精确，转 float 可能舍入；64 位 long 转 double 可能舍入。</li>
+<li>C 浮点转整数向零截断；越界、NaN、无穷没有可依赖的合法整数结果。</li>
+</ol>
+<h2 id="s-0dee023329db">C. 汇编与控制流</h2>
+<ol start="37">
+<li>AT&amp;T 源在前、目的在后；$ 是立即数，% 是寄存器。</li>
+<li>b/w/l/q 分别是 8/16/32/64 位；movl 的 l 不代表 Linux C long 的宽度。</li>
+<li>写 32 位寄存器清对应 64 位寄存器高半部；写 8/16 位仅改相应部分。</li>
+<li>内存地址 D+base+index×scale，scale 只取 1/2/4/8，偏移按字节计。</li>
+<li>mov 读写数据，movs 符号扩展，movz 零扩展；lea 算地址数值而不读内存。</li>
+<li>二元指令更新第二操作数，sub S,D 是 D−S。</li>
+<li>sal=shl；shr 补零；sar 补符号；可变移位计数常在 cl。</li>
+<li>单操作数 mul/imul 的完整乘积在 rdx:rax；rdx 高、rax 低。</li>
+<li>div/idiv 的被除数是 rdx:rax；商 rax、余数 rdx；有符号 64 位除法常先 cqto。</li>
+<li>ZF 看零，SF 看最高位，CF 看无符号进借位，OF 看有符号溢出。</li>
+<li>cmp S,D 用 D−S，test S,D 用 D&amp;S，二者不保存运算结果。</li>
+<li>mov、lea、not 不改条件码；inc、dec 不改 CF；跳转读最近有效的相关条件码。</li>
+<li>有符号小于 jl：SF≠OF；小于等于 jle：ZF=1 或 SF≠OF。</li>
+<li>有符号大于 jg：ZF=0 且 SF=OF；大于等于 jge：SF=OF。</li>
+<li>无符号小于 jb：CF=1；小于等于 jbe：CF=1 或 ZF=1。</li>
+<li>无符号大于 ja：CF=0 且 ZF=0；大于等于 jae：CF=0。</li>
+<li>相等 je 看 ZF=1，不等 jne 看 ZF=0。</li>
+<li>setcc 只写一个字节；完整布尔值常再 movzbl。</li>
+<li>cmov 条件写目的寄存器，但不能普遍替代条件分支的安全求值。</li>
+<li>循环找初始化、更新、条件和回跳；switch 表项可能是地址或相对偏移。</li>
+</ol>
+<h2 id="s-e212c32655a9">D. 过程调用与内存布局</h2>
+<ol start="57">
+<li>栈向低地址增长，rsp 指向栈顶；push 通常减 8，pop 通常加 8。</li>
+<li>call 压下一条指令地址并转到函数；ret 弹返回地址并跳回。</li>
+<li>函数预留空间减 rsp，回收空间加 rsp；ret 前 rsp 要指向返回地址。</li>
+<li>System V 整数/指针参数：rdi、rsi、rdx、rcx、r8、r9；普通整数返回 rax。</li>
+<li>简单第七个整数栈参数在入口常是 8(%rsp)，入口 0(%rsp) 是返回地址。</li>
+<li>被调用者保存：rbx、rbp、r12～r15；调用者保存的值若还要用，由调用者先存。</li>
+<li>call 前普通 rsp 对齐 16；入口 rsp+8 对齐 16；rbp 帧指针可省略。</li>
+<li>call 改变 rsp，已有局部对象的绝对地址不自动改变；其相对偏移会改变。</li>
+<li>一维数组地址 A+i×L；二维连续数组地址 A+(i×C+j)×L。</li>
+<li>指针数组访问先读行指针；连续二维数组直接按固定行宽算位置。</li>
+<li>指针加一走一个目标对象；汇编地址偏移始终按字节。</li>
+<li>结构体逐成员对齐、最后整体对齐；总大小包含填充。</li>
+<li>联合体成员重叠，整体空间按最大需求与对齐确定。</li>
+<li>XMM 常存浮点参数与结果；ss 单精度、sd 双精度；浮点比较另处理无序 NaN。</li>
+</ol></main></div></body></html>
